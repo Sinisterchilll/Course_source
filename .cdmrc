@@ -1,2 +1,2 @@
-tabs: ['README.md' , 'index.html']
+tabs: ['README.md' , 'src/index.html']
 playground-view: terminal-editor-browser

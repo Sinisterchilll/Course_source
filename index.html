@@ -17,50 +17,6 @@
 
     <script>
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("sendButton").addEventListener("click", onSendButtonClick);
-});
-
-function parsedData(data) {
-            const mainArea = document.getElementById("mainArea");
-            const taskHTML = `
-        <div id="task_${data.id}">
-            <span>${data.title}</span>
-            <span>${data.description}</span>
-            <button onclick="deleteTask(${data.id})">Done</button>
-        </div>
-    `;
-
-            mainArea.innerHTML += taskHTML;
-        }
-
-function onSendButtonClick() {
-  const title = document.getElementById("title").value.trim();
-    const description = document.getElementById("description").value.trim();
-
-    if (title && description) {
-        const requestData = {
-            title: title,
-            description: description
-        };
-
-        fetch("https://scene-surface.codedamn.pro/todo", {
-            method: "POST",
-            body: JSON.stringify(requestData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                console.error('Failed to add task. Server response:', response.status);
-                throw new Error('Failed to add task');
-            }
-        }).then(parsedData)
-        .catch(error => console.error('Error adding task:', error));
-    }
-}
 
     </script>
   </body>

@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 async function start() {
-    //await readTodos();
+    await readTodos();
     app.listen(port, () => {
         console.log("Server is running");
     });

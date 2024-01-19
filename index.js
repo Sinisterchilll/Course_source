@@ -19,6 +19,23 @@ async function start() {
     });
 }
 
+app.get('/todo', async (req, res) => {
+    await readTodos();
+    res.send(toDo);
+});
+
+async function readTodos() {
+    try {
+        const data = await fs.readFile(FILE_PATH, 'utf8');
+        toDo = JSON.parse(data);
+    } catch (error) {
+        console.error('Error reading file:', error);
+        toDo = [];
+    }
+}
+
+
+
 app.post('/todo', async (req, res) => {
     const obj = {
         id: Math.floor(Math.random() * 1000000),

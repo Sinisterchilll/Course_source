@@ -16,46 +16,7 @@
     <div id="mainArea"></div>
 
   <script>
-
-    document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("sendButton").addEventListener("click", onpress);
-   // getData();
-});
-
-    function parsedData(data) {
-    console.log(data);
-    var parentElement = document.getElementById("mainArea");
-    var childElement = createTaskElement(data[data.length - 1]);
-    parentElement.append(childElement);
-}
-
-
-    function onpress() {
-    var title = document.getElementById("title").value;
-    var description = document.getElementById("description").value;
-
-    fetch("http://localhost:3000/todo", {
-        method: "POST",
-        body: JSON.stringify({
-            title: title + " ",
-            description: description + " "
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            console.error('Failed to add task. Server response:', response.status);
-            throw new Error('Failed to add task');
-        }
-    }).then(parsedData)
-    .catch(error => {
-        console.error('Error adding task:', error);
-    });
-}
-
+      
   </script>
 </body>
 </html>

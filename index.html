@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+</head>
+
+<body>
+    <label for="title">Title</label>
+    <input type="text" id="title">
+    <label for="description">Description</label>
+    <input type="text" id="description">
+    <button id="sendButton">Send</button>
+    <div id="mainArea"></div>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById("sendButton").addEventListener("click", onpress);
+    getData();
+});
+
+    function parsedData(data) {
+    console.log(data);
+    var parentElement = document.getElementById("mainArea");
+    var childElement = createTaskElement(data[data.length - 1]);
+    parentElement.append(childElement);
+}
+
+    function getData() {
+    fetch("http://localhost:3000/todo", {
+        method: "GET",
+    }).then(callData);
+}
+
+function callData(resp) {
+    resp.json().then(showData);
+}
+
+function showData(data) {
+    var parentElement = document.getElementById("mainArea");
+
+    data.forEach(task => {
+        var childElement = createTaskElement(task);
+        parentElement.append(childElement);
+    });
+}
+
+    function createTaskElement(task) {
+    var childElement = document.createElement("div");
+    childElement.id = "task_" + task.id;
+
+    var grandChildElement1 = document.createElement("span");
+    grandChildElement1.textContent = task.title;
+
+    var grandChildElement2 = document.createElement("span");
+    grandChildElement2.textContent = task.description;
+
+    var grandChildElement3 = document.createElement("button");
+    grandChildElement3.textContent = "Done";
+    grandChildElement3.addEventListener("click", function () {
+        //deleteTask(task.id);
+    });
+
+    childElement.append(grandChildElement1);
+    childElement.append(grandChildElement2);
+    childElement.append(grandChildElement3);
+
+    return childElement;
+}
+
+
+
+    function onpress() {
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+
+    fetch("http://localhost:3000/todo", {
+        method: "POST",
+        body: JSON.stringify({
+            title: title + " ",
+            description: description + " "
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            console.error('Failed to add task. Server response:', response.status);
+            throw new Error('Failed to add task');
+        }
+    }).then(parsedData)
+    .catch(error => {
+        console.error('Error adding task:', error);
+    });
+}
+
+  </script>
+</body>
+</html>
 

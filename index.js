@@ -19,4 +19,23 @@ async function start() {
     });
 }
 
+app.post('/todo', async (req, res) => {
+    const obj = {
+        id: Math.floor(Math.random() * 1000000),
+        title: req.body.title,
+        description: req.body.description
+    };
+    toDo.push(obj);
+    await writeTodos();
+    res.send(toDo);
+});
+
+async function writeTodos() {
+    try {
+        await fs.writeFile(FILE_PATH, JSON.stringify(toDo));
+    } catch (error) {
+        console.error('Error writing file:', error);
+    }
+}
+
 start();

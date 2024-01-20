@@ -61,7 +61,7 @@ function showData(data) {
     var grandChildElement3 = document.createElement("button");
     grandChildElement3.textContent = "Done";
     grandChildElement3.addEventListener("click", function () {
-        //deleteTask(task.id);
+        deleteTask(task.id);
     });
 
     childElement.append(grandChildElement1);
@@ -70,7 +70,9 @@ function showData(data) {
 
     return childElement;
 }
+function deleteTask(id){
 
+}
 
 
     function onpress() {
